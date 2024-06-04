@@ -1,0 +1,171 @@
+{
+    "definition": {
+        "openapi": "3.1.0",
+        "info": {
+            "title": "API Carambar Docs",
+            "version": "0.1.0",
+            "description": "DOC de l'API blague carambar",
+            "contact": {
+                "name": "florian DESAINS",
+                "email": "florian.2cv.desains@gmail.com"
+            }
+        },
+        "servers": [
+            {
+                "url": "https://api-jukebox.onrender.com/api/v1"
+            },
+            {
+                "url": "http://localhost:3000/api/v1"
+            }
+        ],
+        "components": {
+            "schemas": {
+                "blague": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "description": "Id de la blague",
+                            "readOnly": true
+                        },
+                        "blague": {
+                            "type": "string",
+                            "description": "La blague",
+                            "readOnly": true
+                        },
+                        "reponse": {
+                            "type": "string",
+                            "description": "La reponse de la blague",
+                            "readOnly": true
+                        }
+                    },
+                    "example": {
+                        "id": 1,
+                        "blague": "Quelle est la femelle du hamster ?",
+                        "reponse": "L'Amsterdam",
+                        "createdAt": "2024-06-04T11:46:00.646Z",
+                        "updatedAt": "2024-06-04T11:46:00.646Z"
+                    }
+                },
+                "responseSuccessSingle": {
+                    "type": "object",
+                    "properties": {
+                        "error": false,
+                        "data": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/blague"
+                        }
+                    }
+                },
+                "responseSuccessMultiple": {
+                    "type": "object",
+                    "properties": {
+                        "error": false,
+                        "data": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/blague"
+                            }
+                        }
+                    }
+                },
+                "responseError": {
+                    "type": "object",
+                    "properties": {
+                        "error": true,
+                        "message": {
+                            "type": "string",
+                            "description": "Message of the error"
+                        }
+                    }
+                }
+            }
+        },
+        "paths": {
+            "/blague": {
+                "get": {
+                    "summary": "Retourne tout les blagues",
+                    "tags": [
+                        "blague"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Tout les blagues de la bdd.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/responseSuccessMultiple"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/blague/{id}": {
+                "get": {
+                    "summary": "Retour une blague dont l'id a était passer",
+                    "tags": [
+                        "blague"
+                    ],
+                    "parameters": [
+                        {
+                            "in": "path",
+                            "name": "id",
+                            "schema": {
+                                "type": "integer"
+                            },
+                            "required": true,
+                            "description": "Id de la blague"
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Les informations de la blague",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/responseSuccessSingle"
+                                    }
+                                }
+                            }
+                        },
+                        "404": {
+                            "description": "Error blague non trouver",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/responseError"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/blague/random": {
+                "get": {
+                    "summary": "Permet de récuperer une blague aléatoire",
+                    "tags": [
+                        "blague"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "La blague selectionner alétaoirement.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/responseSuccessSingle"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "apis": [
+        "./routes/*.js"
+    ]
+}
