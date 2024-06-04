@@ -5,5 +5,5 @@ Le but était de créer une api permettant 3 chose, la récupération de tout le
 
 ## LIEN UTILE :
 [Lien github du site](https://github.com/flojucv/exam_frontEnd)<br />
-[Lien github Page du site](https://github.com/flojucv/exam_frontEnd/deployments/github-pages)<br />
+[Lien github Page du site](https://flojucv.github.io/exam_frontEnd/)<br />
 [Lien de la documentation de l'api](https://exam-backend-4fy5.onrender.com/api/v1/api-docs/)
